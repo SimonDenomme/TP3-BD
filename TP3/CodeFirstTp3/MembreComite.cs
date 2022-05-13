@@ -12,12 +12,12 @@ namespace CodeFirstTp3
     public sealed class MembreComite
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int MembreID { get; set; }
+        public int Id { get; set; }
         [Required]
         public string CodeUtilisateur { get; set; }
 
         [Required]
-        [StringLength(50,MinimumLength = 8)]
+        [StringLength(64,MinimumLength = 8)]
         [RegularExpression(@".*[0-9].*")]
         public string MotDePasse { get; set; }
 

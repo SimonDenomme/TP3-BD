@@ -21,7 +21,6 @@ namespace CodeFirstTp3
 
             //modelBuilder.Entity<MembreComite>()
             //    .HasKey(m => m.MembreID);
-                
 
         }
 
