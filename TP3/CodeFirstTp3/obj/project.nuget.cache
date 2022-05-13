@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "eEf0NlfaD+uZY2H6ZI8W8iZmPQn32OHH5Ms+E33GUygc+W4zrqA/cukSw9Wle8uU+1uvAtuvbc+MRCarbSXStQ==",
+  "dgSpecHash": "KyjVsUG2pnNd6AiblHelxaCf6wTxYLc3EXaZNnjIgYZ0TOdbIVpgoyCz4xBHUB/oEc+bxNHPoOL97Pll3pSFwA==",
   "success": true,
   "projectFilePath": "D:\\session 6(école)\\Developpement avec BD\\Travaux\\Tp03\\TP3-BD\\TP3\\CodeFirstTp3\\CodeFirstTp3.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\lb02\\.nuget\\packages\\fluentvalidation\\10.4.0\\fluentvalidation.10.4.0.nupkg.sha512",
     "C:\\Users\\lb02\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\lb02\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\lb02\\.nuget\\packages\\microsoft.data.sqlclient\\2.0.1\\microsoft.data.sqlclient.2.0.1.nupkg.sha512",
