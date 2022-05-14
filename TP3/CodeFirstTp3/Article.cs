@@ -8,31 +8,25 @@ using System.Threading.Tasks;
 
 namespace CodeFirstTp3
 {
-    public class Participant
+    public class Article
     {
-        public Participant()
+        public Article()
         {
-            this.Articles = new List<Article>();
+            this.Participants = new List<Participant>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
         [Required]
-        public string Nom { get; set; }
+        public string Titre { get; set; }
         [Required]
-        public string Prenom { get; set; }
+        public DateTime DateSoumis { get; set; }
         [Required]
-        public string Email { get; set; }
-        [Required]
-        public string Affiliation { get; set; }
-        [Required]
-        public DateTime DateInscription { get; set; }
-        [Required]
-        public decimal Dette { get; set; }
+        public string URL { get; set; }
+        public int Version { get; set; }
 
         // https://www.entityframeworktutorial.net/code-first/configure-many-to-many-relationship-in-code-first.aspx
-        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Participant> Participants { get; set; }
         // https://www.entityframeworktutorial.net/code-first/configure-one-to-many-relationship-in-code-first.aspx
         public Conference Conference { get; set; }
     }

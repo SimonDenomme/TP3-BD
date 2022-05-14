@@ -1,5 +1,10 @@
 # Cas d'utilisations
 
+<!-- !!!À OUVRIR AVEC VISUAL STUDIO CODE!!! -->
+
+<!-- 1. Clic droit sur le fichier -->
+<!-- 2. Ouvrir l'aperçu -->
+
 ```plantuml
 left to right direction
 
@@ -81,9 +86,10 @@ rectangle "Abstraction" {
 	c "1" o-- "*" m
 	c "1" o-- "*" p
 
-	m -left-> p
+	m -> p
 
 	a "1" o-- "*" n
+	a "*" o-- "*" p
 }
 
 ```

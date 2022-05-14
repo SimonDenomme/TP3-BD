@@ -15,13 +15,14 @@ namespace CodeFirstTp3
         public int Id { get; set; }
         [Required]
         public string CodeUtilisateur { get; set; }
-
         [Required]
         [StringLength(64,MinimumLength = 8)]
         [RegularExpression(@".*[0-9].*")]
         public string MotDePasse { get; set; }
-
         [Required]
         public Role Role { get; set; }
+
+        // https://www.entityframeworktutorial.net/code-first/configure-one-to-many-relationship-in-code-first.aspx
+        public Conference Conference { get; set; }
     }
 }
