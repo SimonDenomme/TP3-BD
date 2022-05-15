@@ -4,14 +4,16 @@ using CodeFirstTp3;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CodeFirstTp3.Migrations
 {
     [DbContext(typeof(ConferenceContext))]
-    partial class ConferenceContextModelSnapshot : ModelSnapshot
+    [Migration("20220515004809_LinkPtoM")]
+    partial class LinkPtoM
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

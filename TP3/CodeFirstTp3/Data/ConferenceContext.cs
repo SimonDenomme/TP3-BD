@@ -18,6 +18,7 @@ namespace CodeFirstTp3
             modelBuilder.Entity<Conference>().ToTable("conference");
             modelBuilder.Entity<MembreComite>().ToTable("membreComite");
             modelBuilder.Entity<Participant>().ToTable("participant");
+            modelBuilder.Entity<Article>().ToTable("article");
 
             //modelBuilder.Entity<MembreComite>()
             //    .HasKey(m => m.MembreID);

@@ -24,5 +24,6 @@ namespace CodeFirstTp3
 
         // https://www.entityframeworktutorial.net/code-first/configure-one-to-many-relationship-in-code-first.aspx
         public Conference Conference { get; set; }
+        public Participant Participant { get; set; }
     }
 }
