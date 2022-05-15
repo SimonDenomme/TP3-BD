@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 namespace CodeFirstTp3
 {
     public enum Role { PCO, PCP, RF }
-    public sealed class MembreComite
+    public class MembreCO
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        
         [Required]
         public string CodeUtilisateur { get; set; }
         [Required]
@@ -22,8 +23,8 @@ namespace CodeFirstTp3
         [Required]
         public Role Role { get; set; }
 
-        // https://www.entityframeworktutorial.net/code-first/configure-one-to-many-relationship-in-code-first.aspx
-        public Conference Conference { get; set; }
+        // one-to-one
+        public int ParticipantId { get; set; }
         public Participant Participant { get; set; }
     }
 }

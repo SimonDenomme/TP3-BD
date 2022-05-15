@@ -40,13 +40,13 @@ namespace CodeFirstTp3
                 using (var context = new ConferenceContext())
                 {
                     if (mdp.Count() < 8 || mdp.Any(char.IsDigit)) { throw new Exception("Le mot de passe doit être au moins huit caractères incluant au moins un chiffre."); }
-                    if (context.MembreComite.Where(x => x.Role == role).SingleOrDefault() != null) { throw new Exception("Ce role est déjà comblé."); }
-                    if (context.MembreComite.Where(x => x.CodeUtilisateur == codeUtilisateur).SingleOrDefault() != null) { throw new Exception("Ce code d'utilisateur est déjà utilisé."); }
+                    if (context.MembreCO.Where(x => x.Role == role).SingleOrDefault() != null) { throw new Exception("Ce role est déjà comblé."); }
+                    if (context.MembreCO.Where(x => x.CodeUtilisateur == codeUtilisateur).SingleOrDefault() != null) { throw new Exception("Ce code d'utilisateur est déjà utilisé."); }
 
                     var p = context.Participant.Find(id);
                     if (p == null) { throw new Exception("L'Id du participant n'existe pas."); }
 
-                    var m = new MembreComite()
+                    var m = new MembreCO()
                     {
                         CodeUtilisateur = codeUtilisateur,
                         MotDePasse = mdp,
@@ -57,7 +57,7 @@ namespace CodeFirstTp3
                     context.Add(m);
                     context.SaveChanges();
 
-                    return context.MembreComite.Find(m).Id;
+                    return context.MembreCO.Find(m).Id;
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }

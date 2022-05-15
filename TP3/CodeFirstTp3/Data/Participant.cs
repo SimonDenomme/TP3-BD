@@ -10,11 +10,6 @@ namespace CodeFirstTp3
 {
     public class Participant
     {
-        public Participant()
-        {
-            this.Articles = new List<Article>();
-        }
-
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
@@ -31,9 +26,14 @@ namespace CodeFirstTp3
         [Required]
         public decimal Dette { get; set; }
 
-        // https://www.entityframeworktutorial.net/code-first/configure-many-to-many-relationship-in-code-first.aspx
-        public virtual ICollection<Article> Articles { get; set; }
-        // https://www.entityframeworktutorial.net/code-first/configure-one-to-many-relationship-in-code-first.aspx
+        // one-to-many
+        public int ConferenceId { get; set; }
         public Conference Conference { get; set; }
+        // many-to-many
+        public List<Participant_Article> Articles { get; set; }
+        // one-to-one
+        public MembreCO MembreCO { get; set; }
+        // one-to-one
+        public MembreCP MembreCP { get; set; }
     }
 }
