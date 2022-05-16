@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Wpf_GUI
+namespace WPF_GUI
 {
     /// <summary>
     /// Interaction logic for App.xaml
