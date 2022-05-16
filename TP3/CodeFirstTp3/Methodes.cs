@@ -8,6 +8,8 @@ namespace CodeFirstTp3
 {
     public static class Methodes
     {
+        private static int _conferenceId;
+
         public static int InscrireParticipants(string prenom, string nom, string email, string affiliation, DateTime DateInscription, decimal frais)
         {
             using (var context = new ConferenceContext())
@@ -22,6 +24,7 @@ namespace CodeFirstTp3
                         Affiliation = affiliation,
                         DateInscription = DateInscription,
                         Dette = frais,
+                        Conference = context.Conference.Find(_conferenceId)
                     };
 
                     context.Add(p);
@@ -111,7 +114,7 @@ namespace CodeFirstTp3
                         });
                     }
 
-                    context.Add(m);
+                    context.MembreCP.Add(m);
                     context.SaveChanges();
 
                     return context.MembreCP.Find(m).Id;
@@ -134,6 +137,7 @@ namespace CodeFirstTp3
                         Titre = Titre,
                         DateSoumis = DateSoumission,
                         URL = URL,
+                        Version = 1,
                     };
 
                     foreach (int i in auteurs)
@@ -148,7 +152,7 @@ namespace CodeFirstTp3
                         });
                     }
 
-                    context.Add(a);
+                    context.Article.Add(a);
                     context.SaveChanges();
 
                     return context.Article.Find(a).Id;
@@ -181,7 +185,7 @@ namespace CodeFirstTp3
                         });
                     }
 
-                    context.Add(a);
+                    context.Article.Update(a);
                     context.SaveChanges();
 
                     return true;
@@ -202,6 +206,8 @@ namespace CodeFirstTp3
                     var m = context.MembreCP.Find(MembreCPId);
                     if (m == null) { throw new Exception("Ce membre du comité programme n'existe pas."); }
 
+                    if (context.MembreCP_Article.Where(x => x.MembreCP == m && x.Article == a) == null) { throw new Exception("Ce membre du comité programme n'est pas invité au vote."); }
+
                     a.Notes.Add(new Note
                     {
                         Valeur = note,
@@ -209,7 +215,7 @@ namespace CodeFirstTp3
                         MembreCP = m
                     });
 
-                    context.Add(a);
+                    context.Article.Update(a);
                     context.SaveChanges();
 
                     return context.Note.Where(x => x.Article == a).Average(x => x.Valeur);
@@ -224,24 +230,92 @@ namespace CodeFirstTp3
             {
                 using (var context = new ConferenceContext())
                 {
-                    // https://www.tutorialsteacher.com/articles/how-to-sort-sortedlist-in-descending-order-csharp
-                    var descendingComparer = Comparer<int>.Create((x, y) => y.CompareTo(x));
-                    SortedList<int, double> ar = new SortedList<int, double>(descendingComparer);
+                    List<Tuple<int, double>> ar = new();
 
                     var articles = context.Article.ToList();
 
                     foreach (Article a in articles)
-                        ar.Add(a.Id, context.Note.Where(x => x.Article == a).Average(x => x.Valeur));
+                        ar.Add(new Tuple<int, double>(a.Id, context.Note.Where(x => x.Article == a).Average(x => x.Valeur)));
+
+                    // TODO: sort by note
 
                     Console.WriteLine("==================== Rapport des articles ====================");
                     foreach (var a in ar)
                     {
-                        Console.Write(a.Key + " - ");
-                        // il reste à faire l'affichage
+                        Console.Write(a.Item1 + " -> Note: " + a.Item2 + " (");
+                        Console.WriteLine(context.Note.Count(x => x.ArticleId == a.Item2) + ")");
                     }
+                    Console.WriteLine("==============================================================");
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); }
+        }
+
+        public int ProduireProgramme(string Titre, DateTime DateSession, int MembreCPId, params int[] articles)
+        {
+            try
+            {
+                using (var context = new ConferenceContext())
+                {
+                    if (context.Conference.Where(x => x.Titre == Titre).SingleOrDefault() != null) { throw new Exception("Ce titre de session est utilisé par une autre conférence."); }
+
+                    var p = context.MembreCP.Where(x => x.ParticipantId == MembreCPId).SingleOrDefault();
+                    if (p == null) { throw new Exception("Ce participant n'est pas un membre du comité programme."); }
+                    if (context.Conference.Where(x => x.PrésidentDeSession == p).SingleOrDefault() != null) { throw new Exception("Ce membre du comité programme préside une autre conférence."); }
+
+                    var c = new Conference()
+                    {
+                        Titre = Titre,
+                        DateSession = DateSession,
+                        PrésidentDeSession = p,
+                    };
+
+                    foreach (int i in articles)
+                    {
+                        var a = context.Article.Find(i);
+                        if (a == null) { throw new Exception("L'article #" + i + " n'existe pas."); }
+                        if (context.Conference.Where(x => x.Articles.Contains(a)).SingleOrDefault() != null) { throw new Exception("Cet article a été présenté à une autre conférence."); }
+
+                        c.Articles.Add(a);
+                    }
+
+                    context.Conference.Add(c);
+                    context.SaveChanges();
+
+                    _conferenceId = context.Conference.Find(c).Id;
+                    return _conferenceId;
+                }
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); return -1; }
+        }
+
+        public int InscrireVersionRévisée(int id, DateTime DateSoumission, string URL)
+        {
+            try
+            {
+                using (var context = new ConferenceContext())
+                {
+                    var a = context.Article.Find(id);
+                    if (context.Article.Find(id) != null) { throw new Exception("Ce titre de session est utilisé par une autre conférence."); }
+
+                    var a2 = new Article()
+                    {
+                        Titre = a.Titre,
+                        Conference = context.Conference.Find(_conferenceId),
+                        DateSoumis = DateSoumission,
+                        URL = URL,
+                        Version = a.Version + 1,
+                        Auteurs = a.Auteurs,
+                        MembreCPs = a.MembreCPs
+                    };
+
+                    context.Article.Add(a2);
+                    context.SaveChanges();
+
+                    return context.Article.Find(a2).Id;
+                }
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
     }
 }

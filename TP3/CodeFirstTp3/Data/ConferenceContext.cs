@@ -16,6 +16,7 @@ namespace CodeFirstTp3
         public DbSet<Article> Article { get; set; }
         public DbSet<Aptitude> Aptitude { get; set; }
         public DbSet<Note> Note { get; set; }
+        public DbSet<MembreCP_Article> MembreCP_Article { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,6 +27,7 @@ namespace CodeFirstTp3
             modelBuilder.Entity<Article>()/*.ToTable("article")*/;
             modelBuilder.Entity<Aptitude>()/*.ToTable("aptitude")*/;
             modelBuilder.Entity<Note>()/*.ToTable("note")*/;
+            modelBuilder.Entity<MembreCP_Article>()/*.ToTable("memberCP_article")*/;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
