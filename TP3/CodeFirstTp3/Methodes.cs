@@ -234,9 +234,10 @@ namespace CodeFirstTp3
                         ar.Add(a.Id, context.Note.Where(x => x.Article == a).Average(x => x.Valeur));
 
                     Console.WriteLine("==================== Rapport des articles ====================");
-                    foreach (Article a in articles)
+                    foreach (var a in ar)
                     {
-                        Console.Write(a.Id + " - " + a.Titre + " ");
+                        Console.Write(a.Key + " - ");
+                        // il reste à faire l'affichage
                     }
                 }
             }
