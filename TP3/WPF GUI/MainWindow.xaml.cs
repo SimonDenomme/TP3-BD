@@ -24,7 +24,7 @@ namespace WPF_GUI
         private Tp03BD _context = null;
         private CollectionViewSource _participantViewSource;
         private ObservableCollection<Participant> _participants;
-        private ObservableCollection<MembreCO> _membreCOs;
+        //private ObservableCollection<MembreCO> _membreCOs;
 
         public MainWindow()
         {
@@ -57,7 +57,7 @@ namespace WPF_GUI
                     _participantViewSource.View.Refresh();
                 }
             }
-            catch(Exception ex) { }
+            catch/*(Exception ex)*/ { }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
