@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CodeFirstTp3", "CodeFirstTp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP03ClientDonne", "TP03ClientDonne\TP03ClientDonne.csproj", "{9F88B291-F3F5-41C6-875D-B667E3BEAD2E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfServiceConference", "WcfServiceConference\WcfServiceConference.csproj", "{62BBBE6A-C82B-49B5-A54A-6AF6B7108B82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9F88B291-F3F5-41C6-875D-B667E3BEAD2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F88B291-F3F5-41C6-875D-B667E3BEAD2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F88B291-F3F5-41C6-875D-B667E3BEAD2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62BBBE6A-C82B-49B5-A54A-6AF6B7108B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62BBBE6A-C82B-49B5-A54A-6AF6B7108B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62BBBE6A-C82B-49B5-A54A-6AF6B7108B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62BBBE6A-C82B-49B5-A54A-6AF6B7108B82}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
