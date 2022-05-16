@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace WcfServiceConference
 {
+    [ServiceContract]
     public interface IParticipantService
     {
         [OperationContract]
@@ -28,7 +29,7 @@ namespace WcfServiceConference
         [DataMember]
         public string Affiliation { get; set; }
         [DataMember]
-        public DateTime DateInscription { get; set; }
+        public DateTime? DateInscription { get; set; }
         [DataMember]
         public decimal? Dette { get; set; }
         [DataMember]

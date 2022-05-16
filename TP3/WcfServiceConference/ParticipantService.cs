@@ -7,7 +7,7 @@ using TP03ClientDonne;
 
 namespace WcfServiceConference
 {
-    internal class ParticipantService : IParticipantService
+    public sealed partial class ConferenceService : IParticipantService
     {
         public int InscrireParticipants(string prenom, string nom, string email, string affiliation, DateTime DateInscription, decimal frais)
         {
