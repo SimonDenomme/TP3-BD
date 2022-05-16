@@ -157,7 +157,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public int AssignerArticles(int id, params int[] voteurs)
+        public bool AssignerArticles(int id, params int[] voteurs)
         {
             try
             {
@@ -184,15 +184,64 @@ namespace CodeFirstTp3
                     context.Add(a);
                     context.SaveChanges();
 
-                    return context.Article.Find(a).Id;
+                    return true;
+                }
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); return false; }
+        }
+
+        public double EnregistrerNotesEvaluation(int id, int MembreCPId, byte note)
+        {
+            try
+            {
+                using (var context = new ConferenceContext())
+                {
+                    var a = context.Article.Find(id);
+                    if (a == null) { throw new Exception("Cet ouvrage n'existe pas."); }
+
+                    var m = context.MembreCP.Find(MembreCPId);
+                    if (m == null) { throw new Exception("Ce membre du comité programme n'existe pas."); }
+
+                    a.Notes.Add(new Note
+                    {
+                        Valeur = note,
+                        Article = a,
+                        MembreCP = m
+                    });
+
+                    context.Add(a);
+                    context.SaveChanges();
+
+                    return context.Note.Where(x => x.Article == a).Average(x => x.Valeur);
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public int InscrireArticleSoumis(string titre, DateTime dateSoumission,List<int> IDs, string url)
+        public void RapportArticleEnOrdreDeNote()
         {
-            return 0;
+            try
+            {
+                using (var context = new ConferenceContext())
+                {
+                    // https://www.tutorialsteacher.com/articles/how-to-sort-sortedlist-in-descending-order-csharp
+                    var descendingComparer = Comparer<int>.Create((x, y) => y.CompareTo(x));
+                    SortedList<int, double> ar = new SortedList<int, double>(descendingComparer);
+
+                    var articles = context.Article.ToList();
+
+                    foreach (Article a in articles)
+                        ar.Add(a.Id, context.Note.Where(x => x.Article == a).Average(x => x.Valeur));
+
+                    Console.WriteLine("==================== Rapport des articles ====================");
+                    foreach (var a in ar)
+                    {
+                        Console.Write(a.Key + " - ");
+                        // il reste à faire l'affichage
+                    }
+                }
+            }
+            catch (Exception e) { Console.WriteLine(e.Message); }
         }
     }
 }
