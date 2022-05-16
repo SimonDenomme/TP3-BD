@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CodeFirstTp3
 {
+    // https://www.youtube.com/watch?v=Qh2hgIc90y0&t=333s&ab_channel=ErvisTrupja
     public class Participant_Article
     {
         public int Id { get; set; }
