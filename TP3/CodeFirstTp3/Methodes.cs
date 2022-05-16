@@ -251,7 +251,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); }
         }
 
-        public int ProduireProgramme(string Titre, DateTime DateSession, int MembreCPId, params int[] articles)
+        public static int ProduireProgramme(string Titre, DateTime DateSession, int MembreCPId, params int[] articles)
         {
             try
             {
@@ -289,7 +289,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public int InscrireVersionRévisée(int id, DateTime DateSoumission, string URL)
+        public static int InscrireVersionRévisée(int id, DateTime DateSoumission, string URL)
         {
             try
             {
