@@ -1,0 +1,721 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Tp03BDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Aptitude">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="MemberCPId" Type="int" Nullable="false" />
+          <Property Name="MembreCPId" Type="int" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Titre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateSoumis" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="URL" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Version" Type="int" Nullable="false" />
+          <Property Name="ConferenceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MembreCO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CodeUtilisateur" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MotDePasse" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
+          <Property Name="ParticipantId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MembreCP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticipantId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MembreCP_Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MembreCPId" Type="int" Nullable="false" />
+          <Property Name="ArticleId" Type="int" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Valeur" Type="tinyint" Nullable="false" />
+          <Property Name="MemberCPId" Type="int" Nullable="false" />
+          <Property Name="MembreCPId" Type="int" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Prenom" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Affiliation" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateInscription" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Dette" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ConferenceId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Participant_Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParticipantId" Type="int" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Aptitude_MembreCP_MembreCPId">
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="0..1" />
+          <End Role="Aptitude" Type="Self.Aptitude" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembreCP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aptitude">
+              <PropertyRef Name="MembreCPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Conference_ConferenceId">
+          <End Role="Conference" Type="Self.Conference" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCO_Participant_ParticipantId">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MembreCO" Type="Self.MembreCO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCO">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCP_Article_Article_ArticleId">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="MembreCP_Article" Type="Self.MembreCP_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCP_Article">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCP_Article_MembreCP_MembreCPId">
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MembreCP_Article" Type="Self.MembreCP_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembreCP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCP_Article">
+              <PropertyRef Name="MembreCPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCP_Participant_ParticipantId">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCP">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Article_ArticleId">
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_MembreCP_MembreCPId">
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="0..1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembreCP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="MembreCPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_Article_Article_ArticleId">
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Participant_Article" Type="Self.Participant_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant_Article">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_Article_Participant_ParticipantId">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="0..1" />
+          <End Role="Participant_Article" Type="Self.Participant_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant_Article">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_Conference_ConferenceId">
+          <End Role="Conference" Type="Self.Conference" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Tp03BDModelStoreContainer">
+          <EntitySet Name="Aptitude" EntityType="Self.Aptitude" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Article" EntityType="Self.Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Conference" EntityType="Self.Conference" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembreCO" EntityType="Self.MembreCO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembreCP" EntityType="Self.MembreCP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MembreCP_Article" EntityType="Self.MembreCP_Article" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participant" EntityType="Self.Participant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Participant_Article" EntityType="Self.Participant_Article" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Aptitude_MembreCP_MembreCPId" Association="Self.FK_Aptitude_MembreCP_MembreCPId">
+            <End Role="MembreCP" EntitySet="MembreCP" />
+            <End Role="Aptitude" EntitySet="Aptitude" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Conference_ConferenceId" Association="Self.FK_Article_Conference_ConferenceId">
+            <End Role="Conference" EntitySet="Conference" />
+            <End Role="Article" EntitySet="Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCO_Participant_ParticipantId" Association="Self.FK_MembreCO_Participant_ParticipantId">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="MembreCO" EntitySet="MembreCO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCP_Article_Article_ArticleId" Association="Self.FK_MembreCP_Article_Article_ArticleId">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="MembreCP_Article" EntitySet="MembreCP_Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCP_Article_MembreCP_MembreCPId" Association="Self.FK_MembreCP_Article_MembreCP_MembreCPId">
+            <End Role="MembreCP" EntitySet="MembreCP" />
+            <End Role="MembreCP_Article" EntitySet="MembreCP_Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCP_Participant_ParticipantId" Association="Self.FK_MembreCP_Participant_ParticipantId">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="MembreCP" EntitySet="MembreCP" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Article_ArticleId" Association="Self.FK_Note_Article_ArticleId">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Note" EntitySet="Note" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_MembreCP_MembreCPId" Association="Self.FK_Note_MembreCP_MembreCPId">
+            <End Role="MembreCP" EntitySet="MembreCP" />
+            <End Role="Note" EntitySet="Note" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participant_Article_Article_ArticleId" Association="Self.FK_Participant_Article_Article_ArticleId">
+            <End Role="Article" EntitySet="Article" />
+            <End Role="Participant_Article" EntitySet="Participant_Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participant_Article_Participant_ParticipantId" Association="Self.FK_Participant_Article_Participant_ParticipantId">
+            <End Role="Participant" EntitySet="Participant" />
+            <End Role="Participant_Article" EntitySet="Participant_Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participant_Conference_ConferenceId" Association="Self.FK_Participant_Conference_ConferenceId">
+            <End Role="Conference" EntitySet="Conference" />
+            <End Role="Participant" EntitySet="Participant" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Tp03BDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Aptitude">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MemberCPId" Type="Int32" Nullable="false" />
+          <Property Name="MembreCPId" Type="Int32" />
+          <NavigationProperty Name="MembreCP" Relationship="Self.FK_Aptitude_MembreCP_MembreCPId" FromRole="Aptitude" ToRole="MembreCP" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Titre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateSoumis" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="URL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Version" Type="Int32" Nullable="false" />
+          <Property Name="ConferenceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Conference" Relationship="Self.FK_Article_Conference_ConferenceId" FromRole="Article" ToRole="Conference" />
+          <NavigationProperty Name="MembreCP_Article" Relationship="Self.FK_MembreCP_Article_Article_ArticleId" FromRole="Article" ToRole="MembreCP_Article" />
+          <NavigationProperty Name="Notes" Relationship="Self.FK_Note_Article_ArticleId" FromRole="Article" ToRole="Note" />
+          <NavigationProperty Name="Participant_Article" Relationship="Self.FK_Participant_Article_Article_ArticleId" FromRole="Article" ToRole="Participant_Article" />
+        </EntityType>
+        <EntityType Name="Conference">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK_Article_Conference_ConferenceId" FromRole="Conference" ToRole="Article" />
+          <NavigationProperty Name="Participants" Relationship="Self.FK_Participant_Conference_ConferenceId" FromRole="Conference" ToRole="Participant" />
+        </EntityType>
+        <EntityType Name="MembreCO">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CodeUtilisateur" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MotDePasse" Type="String" MaxLength="64" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+          <Property Name="ParticipantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK_MembreCO_Participant_ParticipantId" FromRole="MembreCO" ToRole="Participant" />
+        </EntityType>
+        <EntityType Name="MembreCP">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Aptitudes" Relationship="Self.FK_Aptitude_MembreCP_MembreCPId" FromRole="MembreCP" ToRole="Aptitude" />
+          <NavigationProperty Name="MembreCP_Article" Relationship="Self.FK_MembreCP_Article_MembreCP_MembreCPId" FromRole="MembreCP" ToRole="MembreCP_Article" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK_MembreCP_Participant_ParticipantId" FromRole="MembreCP" ToRole="Participant" />
+          <NavigationProperty Name="Notes" Relationship="Self.FK_Note_MembreCP_MembreCPId" FromRole="MembreCP" ToRole="Note" />
+        </EntityType>
+        <EntityType Name="MembreCP_Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MembreCPId" Type="Int32" Nullable="false" />
+          <Property Name="ArticleId" Type="Int32" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_MembreCP_Article_Article_ArticleId" FromRole="MembreCP_Article" ToRole="Article" />
+          <NavigationProperty Name="MembreCP" Relationship="Self.FK_MembreCP_Article_MembreCP_MembreCPId" FromRole="MembreCP_Article" ToRole="MembreCP" />
+        </EntityType>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Valeur" Type="Byte" Nullable="false" />
+          <Property Name="MemberCPId" Type="Int32" Nullable="false" />
+          <Property Name="MembreCPId" Type="Int32" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_Note_Article_ArticleId" FromRole="Note" ToRole="Article" />
+          <NavigationProperty Name="MembreCP" Relationship="Self.FK_Note_MembreCP_MembreCPId" FromRole="Note" ToRole="MembreCP" />
+        </EntityType>
+        <EntityType Name="Participant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Prenom" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Affiliation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateInscription" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Dette" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ConferenceId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Conference" Relationship="Self.FK_Participant_Conference_ConferenceId" FromRole="Participant" ToRole="Conference" />
+          <NavigationProperty Name="MembreCOes" Relationship="Self.FK_MembreCO_Participant_ParticipantId" FromRole="Participant" ToRole="MembreCO" />
+          <NavigationProperty Name="MembreCPs" Relationship="Self.FK_MembreCP_Participant_ParticipantId" FromRole="Participant" ToRole="MembreCP" />
+          <NavigationProperty Name="Participant_Article" Relationship="Self.FK_Participant_Article_Participant_ParticipantId" FromRole="Participant" ToRole="Participant_Article" />
+        </EntityType>
+        <EntityType Name="Participant_Article">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParticipantId" Type="Int32" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK_Participant_Article_Article_ArticleId" FromRole="Participant_Article" ToRole="Article" />
+          <NavigationProperty Name="Participant" Relationship="Self.FK_Participant_Article_Participant_ParticipantId" FromRole="Participant_Article" ToRole="Participant" />
+        </EntityType>
+        <Association Name="FK_Aptitude_MembreCP_MembreCPId">
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="0..1" />
+          <End Role="Aptitude" Type="Self.Aptitude" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembreCP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Aptitude">
+              <PropertyRef Name="MembreCPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Article_Conference_ConferenceId">
+          <End Role="Conference" Type="Self.Conference" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Article" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCP_Article_Article_ArticleId">
+          <End Role="Article" Type="Self.Article" Multiplicity="0..1" />
+          <End Role="MembreCP_Article" Type="Self.MembreCP_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCP_Article">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_Article_ArticleId">
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_Article_Article_ArticleId">
+          <End Role="Article" Type="Self.Article" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Participant_Article" Type="Self.Participant_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant_Article">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_Conference_ConferenceId">
+          <End Role="Conference" Type="Self.Conference" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Participant" Type="Self.Participant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conference">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant">
+              <PropertyRef Name="ConferenceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCO_Participant_ParticipantId">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MembreCO" Type="Self.MembreCO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCO">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCP_Article_MembreCP_MembreCPId">
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MembreCP_Article" Type="Self.MembreCP_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembreCP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCP_Article">
+              <PropertyRef Name="MembreCPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MembreCP_Participant_ParticipantId">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MembreCP">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Note_MembreCP_MembreCPId">
+          <End Role="MembreCP" Type="Self.MembreCP" Multiplicity="0..1" />
+          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MembreCP">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="MembreCPId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Participant_Article_Participant_ParticipantId">
+          <End Role="Participant" Type="Self.Participant" Multiplicity="0..1" />
+          <End Role="Participant_Article" Type="Self.Participant_Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Participant">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Participant_Article">
+              <PropertyRef Name="ParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Tp03BDEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Aptitudes" EntityType="Self.Aptitude" />
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="Conferences" EntityType="Self.Conference" />
+          <EntitySet Name="MembreCOes" EntityType="Self.MembreCO" />
+          <EntitySet Name="MembreCPs" EntityType="Self.MembreCP" />
+          <EntitySet Name="MembreCP_Article" EntityType="Self.MembreCP_Article" />
+          <EntitySet Name="Notes" EntityType="Self.Note" />
+          <EntitySet Name="Participants" EntityType="Self.Participant" />
+          <EntitySet Name="Participant_Article" EntityType="Self.Participant_Article" />
+          <AssociationSet Name="FK_Aptitude_MembreCP_MembreCPId" Association="Self.FK_Aptitude_MembreCP_MembreCPId">
+            <End Role="MembreCP" EntitySet="MembreCPs" />
+            <End Role="Aptitude" EntitySet="Aptitudes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Article_Conference_ConferenceId" Association="Self.FK_Article_Conference_ConferenceId">
+            <End Role="Conference" EntitySet="Conferences" />
+            <End Role="Article" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCP_Article_Article_ArticleId" Association="Self.FK_MembreCP_Article_Article_ArticleId">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="MembreCP_Article" EntitySet="MembreCP_Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_Article_ArticleId" Association="Self.FK_Note_Article_ArticleId">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participant_Article_Article_ArticleId" Association="Self.FK_Participant_Article_Article_ArticleId">
+            <End Role="Article" EntitySet="Articles" />
+            <End Role="Participant_Article" EntitySet="Participant_Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participant_Conference_ConferenceId" Association="Self.FK_Participant_Conference_ConferenceId">
+            <End Role="Conference" EntitySet="Conferences" />
+            <End Role="Participant" EntitySet="Participants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCO_Participant_ParticipantId" Association="Self.FK_MembreCO_Participant_ParticipantId">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="MembreCO" EntitySet="MembreCOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCP_Article_MembreCP_MembreCPId" Association="Self.FK_MembreCP_Article_MembreCP_MembreCPId">
+            <End Role="MembreCP" EntitySet="MembreCPs" />
+            <End Role="MembreCP_Article" EntitySet="MembreCP_Article" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MembreCP_Participant_ParticipantId" Association="Self.FK_MembreCP_Participant_ParticipantId">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="MembreCP" EntitySet="MembreCPs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Note_MembreCP_MembreCPId" Association="Self.FK_Note_MembreCP_MembreCPId">
+            <End Role="MembreCP" EntitySet="MembreCPs" />
+            <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Participant_Article_Participant_ParticipantId" Association="Self.FK_Participant_Article_Participant_ParticipantId">
+            <End Role="Participant" EntitySet="Participants" />
+            <End Role="Participant_Article" EntitySet="Participant_Article" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Tp03BDModelStoreContainer" CdmEntityContainer="Tp03BDEntities">
+          <EntitySetMapping Name="Aptitudes">
+            <EntityTypeMapping TypeName="Tp03BDModel.Aptitude">
+              <MappingFragment StoreEntitySet="Aptitude">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MemberCPId" ColumnName="MemberCPId" />
+                <ScalarProperty Name="MembreCPId" ColumnName="MembreCPId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="Tp03BDModel.Article">
+              <MappingFragment StoreEntitySet="Article">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Titre" ColumnName="Titre" />
+                <ScalarProperty Name="DateSoumis" ColumnName="DateSoumis" />
+                <ScalarProperty Name="URL" ColumnName="URL" />
+                <ScalarProperty Name="Version" ColumnName="Version" />
+                <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Conferences">
+            <EntityTypeMapping TypeName="Tp03BDModel.Conference">
+              <MappingFragment StoreEntitySet="Conference">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MembreCOes">
+            <EntityTypeMapping TypeName="Tp03BDModel.MembreCO">
+              <MappingFragment StoreEntitySet="MembreCO">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CodeUtilisateur" ColumnName="CodeUtilisateur" />
+                <ScalarProperty Name="MotDePasse" ColumnName="MotDePasse" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="ParticipantId" ColumnName="ParticipantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MembreCPs">
+            <EntityTypeMapping TypeName="Tp03BDModel.MembreCP">
+              <MappingFragment StoreEntitySet="MembreCP">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParticipantId" ColumnName="ParticipantId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MembreCP_Article">
+            <EntityTypeMapping TypeName="Tp03BDModel.MembreCP_Article">
+              <MappingFragment StoreEntitySet="MembreCP_Article">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MembreCPId" ColumnName="MembreCPId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="Tp03BDModel.Note">
+              <MappingFragment StoreEntitySet="Note">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Valeur" ColumnName="Valeur" />
+                <ScalarProperty Name="MemberCPId" ColumnName="MemberCPId" />
+                <ScalarProperty Name="MembreCPId" ColumnName="MembreCPId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participants">
+            <EntityTypeMapping TypeName="Tp03BDModel.Participant">
+              <MappingFragment StoreEntitySet="Participant">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nom" ColumnName="Nom" />
+                <ScalarProperty Name="Prenom" ColumnName="Prenom" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Affiliation" ColumnName="Affiliation" />
+                <ScalarProperty Name="DateInscription" ColumnName="DateInscription" />
+                <ScalarProperty Name="Dette" ColumnName="Dette" />
+                <ScalarProperty Name="ConferenceId" ColumnName="ConferenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Participant_Article">
+            <EntityTypeMapping TypeName="Tp03BDModel.Participant_Article">
+              <MappingFragment StoreEntitySet="Participant_Article">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ParticipantId" ColumnName="ParticipantId" />
+                <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
