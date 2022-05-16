@@ -7,9 +7,14 @@ using System.Threading.Tasks;
 
 namespace CodeFirstTp3
 {
-    public sealed class Conference
+    public class Conference
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int ConferenceID { get; set; }
+        public int Id { get; set; }
+
+        // one-to-many
+        public List<Article> Articles { get; set; }
+        // one-to-many
+        public List<Participant> Participants { get; set; }
     }
 }

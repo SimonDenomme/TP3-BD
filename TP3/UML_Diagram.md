@@ -40,23 +40,20 @@ rectangle "Abstraction" {
 		Affiliation: String
 		DateDeCréation: Date
 		Frais: Real
-
-		InscrireParticipant()
-		InscrirePaiement()
 	}
 
-	class "Membre du comité organisationnel" as m {
+	class "Membre du comité organisationnel" as mco {
 		Id: Integer
 		CodeUtilisateur: String
 		MotDePasse: String
 		Role: String
-
-		InscrireMembresCO()
-		InscrireMembresCP()
 	}
-	
+
+	class "Membre du comité programme" as mcp {
+    	Id: Integer
+  	}
+
 	class "Conférence" as c {
-		ProduireProgramme()
 	}
 	
 	class "Article" as a {
@@ -65,11 +62,6 @@ rectangle "Abstraction" {
 		DateSoumis: Date
 		URL: String
 		Version: Integer
-
-		InscrireArticleSoumis()
-		AssignerArticles()
-		RapportArticleEnOrdreDeNote()
-		InscrireVersionRévisée()
 	}
 
 	class "Note" as n {
@@ -77,16 +69,14 @@ rectangle "Abstraction" {
 		Pointage: Integer
 		ArticleId: Integer
 		MembreCoId: Integer
-
-		EnregisterNotesEvaluation()
 	}
 
 
 	c "1" o-- "*" a
-	c "1" o-- "*" m
 	c "1" o-- "*" p
 
-	m -> p
+	mco -> p
+	mcp -> p
 
 	a "1" o-- "*" n
 	a "*" o-- "*" p
