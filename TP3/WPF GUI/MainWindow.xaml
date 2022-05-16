@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="participantViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Participant}, CreateList=True}"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <CollectionViewSource/>
+    </Window.DataContext>
     <Grid>
         <Label x:Name="lblPrenom" Content="Prénom: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtPrenom" HorizontalAlignment="Left" Margin="82,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
@@ -19,6 +25,17 @@
         <DatePicker x:Name="dtpDate" HorizontalAlignment="Left" Margin="82,136,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblDette" Content="Frais: " HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtDette" HorizontalAlignment="Left" Margin="82,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnParticipant" Content="InscrireParticipant" HorizontalAlignment="Left" Margin="44,0,0,0" VerticalAlignment="Center"/>
+        <Button x:Name="btnParticipant" Content="InscrireParticipant" HorizontalAlignment="Left" Margin="44,0,0,0" VerticalAlignment="Center" Click="btnParticipant_Click"/>
+        <DataGrid x:Name="participantDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource participantViewSource}}" Margin="236,9,146,211" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="IdColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="NomColumn" Binding="{Binding Nom}" Header="Nom" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="PrenomColumn" Binding="{Binding Prenom}" Header="Prenom" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="EmailColumn" Binding="{Binding Email}" Header="Email" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="AffiliationColumn" Binding="{Binding Affiliation}" Header="Affiliation" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="DateInscriptionColumn" Binding="{Binding DateInscription}" Header="DateInscription" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="DetteColumn" Binding="{Binding Dette}" Header="Frais" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
