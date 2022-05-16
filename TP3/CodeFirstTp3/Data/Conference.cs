@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,14 @@ namespace CodeFirstTp3
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+        [Required]
+        public string Titre { get; set; }
+        [Required]
+        public DateTime DateSession { get; set; }
 
+        // one-to-one
+        [Required]
+        public MembreCP PrésidentDeSession { get; set; }
         // one-to-many
         public List<Article> Articles { get; set; }
         // one-to-many

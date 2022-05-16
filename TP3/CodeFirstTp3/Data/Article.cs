@@ -21,7 +21,7 @@ namespace CodeFirstTp3
         public int Version { get; set; }
 
         // one-to-many
-        public int ConferenceId { get; set; }
+        public Nullable<int> ConferenceId { get; set; }
         public Conference Conference { get; set; }
         // many-to-many
         public List<Participant_Article> Auteurs { get; set; }
