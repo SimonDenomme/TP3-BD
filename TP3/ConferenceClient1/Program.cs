@@ -12,6 +12,9 @@ namespace ConferenceClient1
         static void Main(string[] args)
         {
             ParticipantServiceClient psc= new ParticipantServiceClient();
+
+            if(psc.InscrireParticipants("testService","test","test@test.com","aucune",DateTime.Now, 0)== -1)
+                Console.WriteLine("Erreur: InscrireParticipants ");
         }
     }
 }

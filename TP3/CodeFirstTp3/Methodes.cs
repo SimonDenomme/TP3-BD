@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace CodeFirstTp3
 {
-    public sealed class Methodes
+    public static class Methodes
     {
-        public int InscrireParticipants(string prenom, string nom, string email, string affiliation, DateTime DateInscription, decimal frais)
+        public static int InscrireParticipants(string prenom, string nom, string email, string affiliation, DateTime DateInscription, decimal frais)
         {
             using (var context = new ConferenceContext())
             {
@@ -33,7 +33,7 @@ namespace CodeFirstTp3
             }
         }
 
-        public int InscrireMembreCO(int id, string codeUtilisateur, string mdp, Role role)
+        public static int InscrireMembreCO(int id, string codeUtilisateur, string mdp, Role role)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public bool InscrirePaiement(int id, DateTime DatePaiement)
+        public static bool InscrirePaiement(int id, DateTime DatePaiement)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return false; }
         }
 
-        public int InscrireMembreCP(int id, params string[] Aptitudes)
+        public static int InscrireMembreCP(int id, params string[] Aptitudes)
         {
             try
             {
@@ -120,7 +120,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public int InscrireArticleSoumis(string Titre, DateTime DateSoumission, string URL, params int[] auteurs)
+        public static int InscrireArticleSoumis(string Titre, DateTime DateSoumission, string URL, params int[] auteurs)
         {
             try
             {
@@ -157,7 +157,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public bool AssignerArticles(int id, params int[] voteurs)
+        public static bool AssignerArticles(int id, params int[] voteurs)
         {
             try
             {
@@ -190,7 +190,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return false; }
         }
 
-        public double EnregistrerNotesEvaluation(int id, int MembreCPId, byte note)
+        public static double EnregistrerNotesEvaluation(int id, int MembreCPId, byte note)
         {
             try
             {
@@ -218,7 +218,7 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public void RapportArticleEnOrdreDeNote()
+        public static void RapportArticleEnOrdreDeNote()
         {
             try
             {

@@ -6,7 +6,7 @@ namespace CodeFirstTp3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+             Methodes.InscrireParticipants("testService", "test", "test@test.com", "aucune", DateTime.Now, 0);
         }
     }
 }
