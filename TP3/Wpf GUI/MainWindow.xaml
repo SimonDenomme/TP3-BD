@@ -1,0 +1,27 @@
+﻿<Window x:Class="Wpf_GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_GUI"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+    <Window.Resources>
+        <CollectionViewSource x:Key="articleViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Article}, CreateList=True}"/>
+        <CollectionViewSource x:Key="participantViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Participant}, CreateList=True}"/>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource articleViewSource}">
+        <Button x:Name="InscrireParticipants_btn" Content="InscrireParticipants" HorizontalAlignment="Left" Height="30" Margin="62,374,0,0" VerticalAlignment="Top" Width="119" Click="InscrireParticipants_btn_Click"/>
+        <Label x:Name="Nom_lbl" Content="Nom" HorizontalAlignment="Left" Margin="46,12,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Nom_txt" HorizontalAlignment="Left" Height="22" Margin="26,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="Prenom_lbl" Content="Prenom" HorizontalAlignment="Left" Margin="40,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Prenom_txt" HorizontalAlignment="Left" Height="22" Margin="26,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="Email_lbl" Content="Email" HorizontalAlignment="Left" Margin="152,14,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Email_txt" HorizontalAlignment="Left" Height="22" Margin="132,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
+        <Label x:Name="Affiliation_lbl" Content="Affiliation" HorizontalAlignment="Left" Margin="142,74,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Affiliation_txt" HorizontalAlignment="Left" Height="22" Margin="132,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
+        <Calendar HorizontalAlignment="Left" Margin="-37,198,0,0" VerticalAlignment="Top" Height="173" Width="319"/>
+        <Label x:Name="Dette_lbl" Content="Dette" HorizontalAlignment="Left" Margin="101,140,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Affiliation_txt_Copy" HorizontalAlignment="Left" Height="22" Margin="81,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
+    </Grid>
+</Window>

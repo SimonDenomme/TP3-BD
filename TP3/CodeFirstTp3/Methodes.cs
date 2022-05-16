@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,23 +11,23 @@ namespace CodeFirstTp3
     {
         private static int _conferenceId;
 
-        public static int AjouterConference( DateTime dateSession, string titre)
+        public static int AjouterConference(DateTime dateSession, string titre)
         {
             using (var context = new ConferenceContext())
             {
                 try
                 {
-                    var conference  = new Conference()
+                    var conference = new Conference()
                     {
                         DateSession = dateSession,
-                        Titre= titre,
+                        Titre = titre,
                     };
 
                     context.Conference.Add(conference);
                     context.SaveChanges();
                     return context.Conference.Find(conference.Id).Id;
                 }
-                catch 
+                catch
                 {
                     return -1;
                 }
@@ -59,17 +60,17 @@ namespace CodeFirstTp3
             }
         }
 
-        public static int InscrireMembreCO(int id, string codeUtilisateur, string mdp, Role role)
+        public static int InscrireMembreCO(int ParticipantId, string codeUtilisateur, string mdp, Role role)
         {
             try
             {
                 using (var context = new ConferenceContext())
                 {
-                    if (mdp.Count() < 8 || mdp.Any(char.IsDigit)) { throw new Exception("Le mot de passe doit être au moins huit caractères incluant au moins un chiffre."); }
+                    if (mdp.Length < 8 || !mdp.Any(char.IsDigit)) { throw new Exception("Le mot de passe doit être au moins huit caractères incluant au moins un chiffre."); }
                     if (context.MembreCO.Where(x => x.Role == role).SingleOrDefault() != null) { throw new Exception("Ce role est déjà comblé."); }
                     if (context.MembreCO.Where(x => x.CodeUtilisateur == codeUtilisateur).SingleOrDefault() != null) { throw new Exception("Ce code d'utilisateur est déjà utilisé."); }
 
-                    var p = context.Participant.Find(id);
+                    var p = context.Participant.Find(ParticipantId);
                     if (p == null) { throw new Exception("L'Id du participant n'existe pas."); }
 
                     var m = new MembreCO()
@@ -83,7 +84,7 @@ namespace CodeFirstTp3
                     context.Add(m);
                     context.SaveChanges();
 
-                    return context.MembreCO.Find(m).Id;
+                    return context.MembreCO.Find(m.Id).Id;
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
@@ -111,39 +112,69 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return false; }
         }
 
-        public static int InscrireMembreCP(int id, params string[] Aptitudes)
+        public static int InscrireMembreCP(int participantId, params string[] Aptitudes)
         {
             try
             {
+
+
                 using (var context = new ConferenceContext())
+
                 {
-                    var p = context.Participant.Find(id);
+                    var p = context.Participant.Find(participantId);
+                    if(context.MembreCP.Where(m=>m.ParticipantId== participantId) != null)
+                    { throw new Exception("Ne peut pas rajouter deux fois le même membre"); }
                     if (p == null) { throw new Exception("L'Id du participant n'existe pas."); }
 
                     if (Aptitudes == null) { throw new Exception("L'ensemble des aptitudes ne peut êter vide."); }
                     if (Aptitudes.Length < 2) { throw new Exception("L'ensemble des aptitudes doit être d'au moins 2."); }
 
-                    var m = new MembreCP()
+
+                    MembreCP m = new MembreCP()
                     {
-                        Participant = p,
+                        ParticipantId = p.Id,
                     };
 
-                    foreach (string s in Aptitudes)
+                    try
                     {
-                        m.Aptitudes.Add(new Aptitude
+                       
+
+                        context.MembreCP.Add(m);
+                        context.SaveChanges();
+
+                        if (m.Aptitudes == null)
+                            m.Aptitudes = new List<Aptitude>();
+
+                        foreach (string s in Aptitudes)
                         {
-                            MembreCP = m,
-                            Name = s,
-                        });
+                            m.Aptitudes.Add(new Aptitude
+                            {
+                                MemberCPId = m.Id,
+                                Name = s,
+                            });
+                        }
+
+                        context.MembreCP.Update(m);
+                        context.SaveChanges();
+
+                        return context.MembreCP.Find(m).Id;
                     }
+                    catch (DbUpdateException e)
+                    {
 
-                    context.MembreCP.Add(m);
-                    context.SaveChanges();
-
-                    return context.MembreCP.Find(m).Id;
+                        if(context.MembreCP.Find(m.Id)!= null)
+                            context.MembreCP.Remove(m);
+                        Console.WriteLine(e.Message);
+                        return -1;
+                    }
                 }
             }
-            catch (Exception e) { Console.WriteLine(e.Message); return -1; }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+                return -1;
+            }
         }
 
         public static int InscrireArticleSoumis(string Titre, DateTime DateSoumission, string URL, params int[] auteurs)
