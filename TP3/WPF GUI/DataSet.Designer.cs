@@ -46,6 +46,8 @@ namespace WPF_GUI {
         
         private global::System.Data.DataRelation relationFK_Article_Conference_ConferenceId;
         
+        private global::System.Data.DataRelation relationFK_Conference_MembreCP_PrésidentDeSessionId;
+        
         private global::System.Data.DataRelation relationFK_MembreCO_Participant_ParticipantId;
         
         private global::System.Data.DataRelation relationFK_MembreCP_Participant_ParticipantId;
@@ -410,6 +412,7 @@ namespace WPF_GUI {
             }
             this.relationFK_Aptitude_MembreCP_MembreCPId = this.Relations["FK_Aptitude_MembreCP_MembreCPId"];
             this.relationFK_Article_Conference_ConferenceId = this.Relations["FK_Article_Conference_ConferenceId"];
+            this.relationFK_Conference_MembreCP_PrésidentDeSessionId = this.Relations["FK_Conference_MembreCP_PrésidentDeSessionId"];
             this.relationFK_MembreCO_Participant_ParticipantId = this.Relations["FK_MembreCO_Participant_ParticipantId"];
             this.relationFK_MembreCP_Participant_ParticipantId = this.Relations["FK_MembreCP_Participant_ParticipantId"];
             this.relationFK_MembreCP_Article_Article_ArticleId = this.Relations["FK_MembreCP_Article_Article_ArticleId"];
@@ -455,6 +458,10 @@ namespace WPF_GUI {
                         this.tableConference.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableArticle.ConferenceIdColumn}, false);
             this.Relations.Add(this.relationFK_Article_Conference_ConferenceId);
+            this.relationFK_Conference_MembreCP_PrésidentDeSessionId = new global::System.Data.DataRelation("FK_Conference_MembreCP_PrésidentDeSessionId", new global::System.Data.DataColumn[] {
+                        this.tableMembreCP.IdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableConference.PrésidentDeSessionIdColumn}, false);
+            this.Relations.Add(this.relationFK_Conference_MembreCP_PrésidentDeSessionId);
             this.relationFK_MembreCO_Participant_ParticipantId = new global::System.Data.DataRelation("FK_MembreCO_Participant_ParticipantId", new global::System.Data.DataColumn[] {
                         this.tableParticipant.IdColumn}, new global::System.Data.DataColumn[] {
                         this.tableMembreCO.ParticipantIdColumn}, false);
@@ -1153,7 +1160,6 @@ namespace WPF_GUI {
                 this.columnURL.AllowDBNull = false;
                 this.columnURL.MaxLength = 2147483647;
                 this.columnVersion.AllowDBNull = false;
-                this.columnConferenceId.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1289,6 +1295,12 @@ namespace WPF_GUI {
             
             private global::System.Data.DataColumn columnId;
             
+            private global::System.Data.DataColumn columnTitre;
+            
+            private global::System.Data.DataColumn columnDateSession;
+            
+            private global::System.Data.DataColumn columnPrésidentDeSessionId;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public ConferenceDataTable() {
@@ -1332,6 +1344,30 @@ namespace WPF_GUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn TitreColumn {
+                get {
+                    return this.columnTitre;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn DateSessionColumn {
+                get {
+                    return this.columnDateSession;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public global::System.Data.DataColumn PrésidentDeSessionIdColumn {
+                get {
+                    return this.columnPrésidentDeSessionId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -1367,10 +1403,16 @@ namespace WPF_GUI {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
-            public ConferenceRow AddConferenceRow() {
+            public ConferenceRow AddConferenceRow(string Titre, System.DateTime DateSession, MembreCPRow parentMembreCPRowByFK_Conference_MembreCP_PrésidentDeSessionId) {
                 ConferenceRow rowConferenceRow = ((ConferenceRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
+                        null,
+                        Titre,
+                        DateSession,
                         null};
+                if ((parentMembreCPRowByFK_Conference_MembreCP_PrésidentDeSessionId != null)) {
+                    columnValuesArray[3] = parentMembreCPRowByFK_Conference_MembreCP_PrésidentDeSessionId[0];
+                }
                 rowConferenceRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowConferenceRow);
                 return rowConferenceRow;
@@ -1401,6 +1443,9 @@ namespace WPF_GUI {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             internal void InitVars() {
                 this.columnId = base.Columns["Id"];
+                this.columnTitre = base.Columns["Titre"];
+                this.columnDateSession = base.Columns["DateSession"];
+                this.columnPrésidentDeSessionId = base.Columns["PrésidentDeSessionId"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1408,6 +1453,12 @@ namespace WPF_GUI {
             private void InitClass() {
                 this.columnId = new global::System.Data.DataColumn("Id", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnId);
+                this.columnTitre = new global::System.Data.DataColumn("Titre", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnTitre);
+                this.columnDateSession = new global::System.Data.DataColumn("DateSession", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnDateSession);
+                this.columnPrésidentDeSessionId = new global::System.Data.DataColumn("PrésidentDeSessionId", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPrésidentDeSessionId);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnId}, true));
                 this.columnId.AutoIncrement = true;
@@ -1416,6 +1467,9 @@ namespace WPF_GUI {
                 this.columnId.AllowDBNull = false;
                 this.columnId.ReadOnly = true;
                 this.columnId.Unique = true;
+                this.columnTitre.AllowDBNull = false;
+                this.columnTitre.MaxLength = 2147483647;
+                this.columnDateSession.AllowDBNull = false;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3621,7 +3675,12 @@ namespace WPF_GUI {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
             public int ConferenceId {
                 get {
-                    return ((int)(this[this.tableArticle.ConferenceIdColumn]));
+                    try {
+                        return ((int)(this[this.tableArticle.ConferenceIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ConferenceId\' in table \'Article\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableArticle.ConferenceIdColumn] = value;
@@ -3637,6 +3696,18 @@ namespace WPF_GUI {
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_Article_Conference_ConferenceId"]);
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsConferenceIdNull() {
+                return this.IsNull(this.tableArticle.ConferenceIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetConferenceIdNull() {
+                this[this.tableArticle.ConferenceIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3696,6 +3767,67 @@ namespace WPF_GUI {
                 set {
                     this[this.tableConference.IdColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public string Titre {
+                get {
+                    return ((string)(this[this.tableConference.TitreColumn]));
+                }
+                set {
+                    this[this.tableConference.TitreColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public System.DateTime DateSession {
+                get {
+                    return ((global::System.DateTime)(this[this.tableConference.DateSessionColumn]));
+                }
+                set {
+                    this[this.tableConference.DateSessionColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public int PrésidentDeSessionId {
+                get {
+                    try {
+                        return ((int)(this[this.tableConference.PrésidentDeSessionIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PrésidentDeSessionId\' in table \'Conference\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableConference.PrésidentDeSessionIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public MembreCPRow MembreCPRow {
+                get {
+                    return ((MembreCPRow)(this.GetParentRow(this.Table.ParentRelations["FK_Conference_MembreCP_PrésidentDeSessionId"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_Conference_MembreCP_PrésidentDeSessionId"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public bool IsPrésidentDeSessionIdNull() {
+                return this.IsNull(this.tableConference.PrésidentDeSessionIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public void SetPrésidentDeSessionIdNull() {
+                this[this.tableConference.PrésidentDeSessionIdColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3857,6 +3989,17 @@ namespace WPF_GUI {
                 }
                 else {
                     return ((AptitudeRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Aptitude_MembreCP_MembreCPId"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+            public ConferenceRow[] GetConferenceRows() {
+                if ((this.Table.ChildRelations["FK_Conference_MembreCP_PrésidentDeSessionId"] == null)) {
+                    return new ConferenceRow[0];
+                }
+                else {
+                    return ((ConferenceRow[])(base.GetChildRows(this.Table.ChildRelations["FK_Conference_MembreCP_PrésidentDeSessionId"])));
                 }
             }
             
@@ -4787,7 +4930,7 @@ SELECT Id, Name, MemberCPId, MembreCPId FROM Aptitude WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5103,12 +5246,13 @@ SELECT Id, Name, MemberCPId, MembreCPId FROM Aptitude WHERE (Id = @Id)";
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
             this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Article] WHERE (([Id] = @Original_Id) AND ([DateSoumis] = @Ori" +
-                "ginal_DateSoumis) AND ([Version] = @Original_Version) AND ([ConferenceId] = @Ori" +
-                "ginal_ConferenceId))";
+                "ginal_DateSoumis) AND ([Version] = @Original_Version) AND ((@IsNull_ConferenceId" +
+                " = 1 AND [ConferenceId] IS NULL) OR ([ConferenceId] = @Original_ConferenceId)))";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateSoumis", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateSoumis", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Version", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Version", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ConferenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ConferenceId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ConferenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ConferenceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
@@ -5124,7 +5268,7 @@ SELECT Id, Name, MemberCPId, MembreCPId FROM Aptitude WHERE (Id = @Id)";
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ConferenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ConferenceId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
-            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Article] SET [Titre] = @Titre, [DateSoumis] = @DateSoumis, [URL] = @URL, [Version] = @Version, [ConferenceId] = @ConferenceId WHERE (([Id] = @Original_Id) AND ([DateSoumis] = @Original_DateSoumis) AND ([Version] = @Original_Version) AND ([ConferenceId] = @Original_ConferenceId));
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Article] SET [Titre] = @Titre, [DateSoumis] = @DateSoumis, [URL] = @URL, [Version] = @Version, [ConferenceId] = @ConferenceId WHERE (([Id] = @Original_Id) AND ([DateSoumis] = @Original_DateSoumis) AND ([Version] = @Original_Version) AND ((@IsNull_ConferenceId = 1 AND [ConferenceId] IS NULL) OR ([ConferenceId] = @Original_ConferenceId)));
 SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id = @Id)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Titre", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Titre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -5135,6 +5279,7 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateSoumis", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateSoumis", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Version", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Version", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ConferenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ConferenceId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ConferenceId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ConferenceId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -5143,7 +5288,7 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5213,11 +5358,18 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id, System.DateTime Original_DateSoumis, int Original_Version, int Original_ConferenceId) {
+        public virtual int Delete(int Original_Id, System.DateTime Original_DateSoumis, int Original_Version, global::System.Nullable<int> Original_ConferenceId) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
             this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_DateSoumis));
             this.Adapter.DeleteCommand.Parameters[2].Value = ((int)(Original_Version));
-            this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_ConferenceId));
+            if ((Original_ConferenceId.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[4].Value = ((int)(Original_ConferenceId.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5238,7 +5390,7 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert(string Titre, System.DateTime DateSoumis, string URL, int Version, int ConferenceId) {
+        public virtual int Insert(string Titre, System.DateTime DateSoumis, string URL, int Version, global::System.Nullable<int> ConferenceId) {
             if ((Titre == null)) {
                 throw new global::System.ArgumentNullException("Titre");
             }
@@ -5253,7 +5405,12 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
                 this.Adapter.InsertCommand.Parameters[2].Value = ((string)(URL));
             }
             this.Adapter.InsertCommand.Parameters[3].Value = ((int)(Version));
-            this.Adapter.InsertCommand.Parameters[4].Value = ((int)(ConferenceId));
+            if ((ConferenceId.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[4].Value = ((int)(ConferenceId.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5274,7 +5431,7 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Titre, System.DateTime DateSoumis, string URL, int Version, int ConferenceId, int Original_Id, System.DateTime Original_DateSoumis, int Original_Version, int Original_ConferenceId, int Id) {
+        public virtual int Update(string Titre, System.DateTime DateSoumis, string URL, int Version, global::System.Nullable<int> ConferenceId, int Original_Id, System.DateTime Original_DateSoumis, int Original_Version, global::System.Nullable<int> Original_ConferenceId, int Id) {
             if ((Titre == null)) {
                 throw new global::System.ArgumentNullException("Titre");
             }
@@ -5289,12 +5446,24 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
                 this.Adapter.UpdateCommand.Parameters[2].Value = ((string)(URL));
             }
             this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Version));
-            this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(ConferenceId));
+            if ((ConferenceId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[4].Value = ((int)(ConferenceId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
             this.Adapter.UpdateCommand.Parameters[5].Value = ((int)(Original_Id));
             this.Adapter.UpdateCommand.Parameters[6].Value = ((System.DateTime)(Original_DateSoumis));
             this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Original_Version));
-            this.Adapter.UpdateCommand.Parameters[8].Value = ((int)(Original_ConferenceId));
-            this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Id));
+            if ((Original_ConferenceId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[9].Value = ((int)(Original_ConferenceId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[8].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[10].Value = ((int)(Id));
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5315,7 +5484,7 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
-        public virtual int Update(string Titre, System.DateTime DateSoumis, string URL, int Version, int ConferenceId, int Original_Id, System.DateTime Original_DateSoumis, int Original_Version, int Original_ConferenceId) {
+        public virtual int Update(string Titre, System.DateTime DateSoumis, string URL, int Version, global::System.Nullable<int> ConferenceId, int Original_Id, System.DateTime Original_DateSoumis, int Original_Version, global::System.Nullable<int> Original_ConferenceId) {
             return this.Update(Titre, DateSoumis, URL, Version, ConferenceId, Original_Id, Original_DateSoumis, Original_Version, Original_ConferenceId, Original_Id);
         }
     }
@@ -5442,24 +5611,50 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "Conference";
             tableMapping.ColumnMappings.Add("Id", "Id");
+            tableMapping.ColumnMappings.Add("Titre", "Titre");
+            tableMapping.ColumnMappings.Add("DateSession", "DateSession");
+            tableMapping.ColumnMappings.Add("PrésidentDeSessionId", "PrésidentDeSessionId");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
-            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Conference] WHERE (([Id] = @Original_Id))";
+            this._adapter.DeleteCommand.CommandText = "DELETE FROM [dbo].[Conference] WHERE (([Id] = @Original_Id) AND ([DateSession] = " +
+                "@Original_DateSession) AND ((@IsNull_PrésidentDeSessionId = 1 AND [PrésidentDeSe" +
+                "ssionId] IS NULL) OR ([PrésidentDeSessionId] = @Original_PrésidentDeSessionId)))" +
+                "";
             this._adapter.DeleteCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateSession", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateSession", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PrésidentDeSessionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PrésidentDeSessionId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PrésidentDeSessionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PrésidentDeSessionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Conference] DEFAULT VALUES;\r\nSELECT Id FROM Conference WHERE (" +
-                "Id = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = "INSERT INTO [dbo].[Conference] ([Titre], [DateSession], [PrésidentDeSessionId]) V" +
+                "ALUES (@Titre, @DateSession, @PrésidentDeSessionId);\r\nSELECT Id, Titre, DateSess" +
+                "ion, PrésidentDeSessionId FROM Conference WHERE (Id = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Titre", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Titre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateSession", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateSession", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PrésidentDeSessionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PrésidentDeSessionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
+            this._adapter.UpdateCommand.Connection = this.Connection;
+            this._adapter.UpdateCommand.CommandText = @"UPDATE [dbo].[Conference] SET [Titre] = @Titre, [DateSession] = @DateSession, [PrésidentDeSessionId] = @PrésidentDeSessionId WHERE (([Id] = @Original_Id) AND ([DateSession] = @Original_DateSession) AND ((@IsNull_PrésidentDeSessionId = 1 AND [PrésidentDeSessionId] IS NULL) OR ([PrésidentDeSessionId] = @Original_PrésidentDeSessionId)));
+SELECT Id, Titre, DateSession, PrésidentDeSessionId FROM Conference WHERE (Id = @Id)";
+            this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Titre", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Titre", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@DateSession", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateSession", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@PrésidentDeSessionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PrésidentDeSessionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Id", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_DateSession", global::System.Data.SqlDbType.DateTime2, 0, global::System.Data.ParameterDirection.Input, 0, 0, "DateSession", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_PrésidentDeSessionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PrésidentDeSessionId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_PrésidentDeSessionId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "PrésidentDeSessionId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Id", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Id", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5468,7 +5663,7 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT Id FROM dbo.Conference";
+            this._commandCollection[0].CommandText = "SELECT Id, Titre, DateSession, PrésidentDeSessionId FROM dbo.Conference";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -5529,8 +5724,17 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Delete, true)]
-        public virtual int Delete(int Original_Id) {
+        public virtual int Delete(int Original_Id, System.DateTime Original_DateSession, global::System.Nullable<int> Original_PrésidentDeSessionId) {
             this.Adapter.DeleteCommand.Parameters[0].Value = ((int)(Original_Id));
+            this.Adapter.DeleteCommand.Parameters[1].Value = ((System.DateTime)(Original_DateSession));
+            if ((Original_PrésidentDeSessionId.HasValue == true)) {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(0));
+                this.Adapter.DeleteCommand.Parameters[3].Value = ((int)(Original_PrésidentDeSessionId.Value));
+            }
+            else {
+                this.Adapter.DeleteCommand.Parameters[2].Value = ((object)(1));
+                this.Adapter.DeleteCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5551,7 +5755,20 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, true)]
-        public virtual int Insert() {
+        public virtual int Insert(string Titre, System.DateTime DateSession, global::System.Nullable<int> PrésidentDeSessionId) {
+            if ((Titre == null)) {
+                throw new global::System.ArgumentNullException("Titre");
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Titre));
+            }
+            this.Adapter.InsertCommand.Parameters[1].Value = ((System.DateTime)(DateSession));
+            if ((PrésidentDeSessionId.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((int)(PrésidentDeSessionId.Value));
+            }
+            else {
+                this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
             global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
@@ -5566,6 +5783,59 @@ SELECT Id, Titre, DateSoumis, URL, Version, ConferenceId FROM Article WHERE (Id 
                     this.Adapter.InsertCommand.Connection.Close();
                 }
             }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string Titre, System.DateTime DateSession, global::System.Nullable<int> PrésidentDeSessionId, int Original_Id, System.DateTime Original_DateSession, global::System.Nullable<int> Original_PrésidentDeSessionId, int Id) {
+            if ((Titre == null)) {
+                throw new global::System.ArgumentNullException("Titre");
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[0].Value = ((string)(Titre));
+            }
+            this.Adapter.UpdateCommand.Parameters[1].Value = ((System.DateTime)(DateSession));
+            if ((PrésidentDeSessionId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((int)(PrésidentDeSessionId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[3].Value = ((int)(Original_Id));
+            this.Adapter.UpdateCommand.Parameters[4].Value = ((System.DateTime)(Original_DateSession));
+            if ((Original_PrésidentDeSessionId.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(0));
+                this.Adapter.UpdateCommand.Parameters[6].Value = ((int)(Original_PrésidentDeSessionId.Value));
+            }
+            else {
+                this.Adapter.UpdateCommand.Parameters[5].Value = ((object)(1));
+                this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            this.Adapter.UpdateCommand.Parameters[7].Value = ((int)(Id));
+            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                this.Adapter.UpdateCommand.Connection.Open();
+            }
+            try {
+                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                return returnValue;
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    this.Adapter.UpdateCommand.Connection.Close();
+                }
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
+        public virtual int Update(string Titre, System.DateTime DateSession, global::System.Nullable<int> PrésidentDeSessionId, int Original_Id, System.DateTime Original_DateSession, global::System.Nullable<int> Original_PrésidentDeSessionId) {
+            return this.Update(Titre, DateSession, PrésidentDeSessionId, Original_Id, Original_DateSession, Original_PrésidentDeSessionId, Original_Id);
         }
     }
     
@@ -5737,7 +6007,7 @@ SELECT Id, CodeUtilisateur, MotDePasse, Role, ParticipantId FROM MembreCO WHERE 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6075,7 +6345,7 @@ SELECT Id, CodeUtilisateur, MotDePasse, Role, ParticipantId FROM MembreCO WHERE 
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6381,7 +6651,7 @@ SELECT Id, MembreCPId, ArticleId FROM MembreCP_Article WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6723,7 +6993,7 @@ SELECT Id, Valeur, MemberCPId, MembreCPId, ArticleId FROM Note WHERE (Id = @Id)"
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7079,7 +7349,7 @@ SELECT Id, Nom, Prenom, Email, Affiliation, DateInscription, Dette, ConferenceId
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7442,7 +7712,7 @@ SELECT Id, ParticipantId, ArticleId FROM Participant_Article WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.CodeFirstConnectionString;
+            this._connection.ConnectionString = global::WPF_GUI.Properties.Settings.Default.Tp03BDConnectionString;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -7892,6 +8162,15 @@ SELECT Id, ParticipantId, ArticleId FROM Participant_Article WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateUpdatedRows(DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._membreCPTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.MembreCP.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._membreCPTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._conferenceTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.Conference.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -7916,15 +8195,6 @@ SELECT Id, ParticipantId, ArticleId FROM Participant_Article WHERE (Id = @Id)";
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._articleTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._membreCPTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.MembreCP.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._membreCPTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -7983,6 +8253,14 @@ SELECT Id, ParticipantId, ArticleId FROM Participant_Article WHERE (Id = @Id)";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")]
         private int UpdateInsertedRows(DataSet dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
             int result = 0;
+            if ((this._membreCPTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.MembreCP.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._membreCPTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._conferenceTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.Conference.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -8004,14 +8282,6 @@ SELECT Id, ParticipantId, ArticleId FROM Participant_Article WHERE (Id = @Id)";
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._articleTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._membreCPTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.MembreCP.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._membreCPTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -8105,14 +8375,6 @@ SELECT Id, ParticipantId, ArticleId FROM Participant_Article WHERE (Id = @Id)";
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._membreCPTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.MembreCP.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._membreCPTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._articleTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.Article.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -8134,6 +8396,14 @@ SELECT Id, ParticipantId, ArticleId FROM Participant_Article WHERE (Id = @Id)";
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._conferenceTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._membreCPTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.MembreCP.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._membreCPTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

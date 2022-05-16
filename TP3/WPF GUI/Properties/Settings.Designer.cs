@@ -33,5 +33,16 @@ namespace WPF_GUI.Properties {
                 return ((string)(this["CodeFirstConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tp03BD;Integrated Security=Tru" +
+            "e")]
+        public string Tp03BDConnectionString {
+            get {
+                return ((string)(this["Tp03BDConnectionString"]));
+            }
+        }
     }
 }

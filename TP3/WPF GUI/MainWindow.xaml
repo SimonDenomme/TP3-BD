@@ -7,6 +7,18 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Label x:Name="lblPrenom" Content="Prénom: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtPrenom" HorizontalAlignment="Left" Margin="82,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblNom" Content="Nom: " HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNom" HorizontalAlignment="Left" Margin="82,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblEmail" Content="Email: " HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="82,72,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblAffiliation" Content="Affiliation: " HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtAffiliation" HorizontalAlignment="Left" Margin="82,103,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblDate" Content="Date: " HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="dtpDate" HorizontalAlignment="Left" Margin="82,136,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDette" Content="Frais: " HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDette" HorizontalAlignment="Left" Margin="82,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnParticipant" Content="InscrireParticipant" HorizontalAlignment="Left" Margin="44,0,0,0" VerticalAlignment="Center"/>
     </Grid>
 </Window>
