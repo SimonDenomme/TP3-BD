@@ -11,7 +11,7 @@ namespace WcfServiceConference
     {
         public int InscrireParticipants(string prenom, string nom, string email, string affiliation, DateTime DateInscription, decimal frais)
         {
-            using (var context = new Tp03BDEntities())
+            using (var context = new Tp03BDEntities1())
             {
                 try
                 {
@@ -23,12 +23,13 @@ namespace WcfServiceConference
                         Affiliation = affiliation,
                         DateInscription = DateInscription,
                         Dette = frais,
+                        ConferenceId = context.Conference.Find(1).Id,
                     };
 
-                    context.Participants.Add(p);
+                    context.Participant.Add(p);
                     context.SaveChanges();
 
-                    return context.Participants.Find(p).Id;
+                    return context.Participant.Find(p.Id).Id;
                 }
                 catch { return -1; }
             }

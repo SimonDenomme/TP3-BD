@@ -13,8 +13,9 @@ namespace ConferenceClient1
         {
             ParticipantServiceClient psc= new ParticipantServiceClient();
 
-            if(psc.InscrireParticipants("testService","test","test@test.com","aucune",DateTime.Now, 0)== -1)
+            if(psc.InscrireParticipants("testServiceWCF","test","test@test.com","aucune",DateTime.Now, 0)== -1)
                 Console.WriteLine("Erreur: InscrireParticipants ");
+            Console.ReadLine();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace TP03ClientDonne
     {
         static void Main(string[] args)
         {
-            Tp03BDEntities tp03BDEntities= new Tp03BDEntities();
+            Tp03BDEntities1 tp03BDEntities= new Tp03BDEntities1();
         }
     }
 }

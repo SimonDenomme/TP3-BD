@@ -18,7 +18,7 @@ namespace TP03ClientDonne
         public Article()
         {
             this.MembreCP_Article = new HashSet<MembreCP_Article>();
-            this.Notes = new HashSet<Note>();
+            this.Note = new HashSet<Note>();
             this.Participant_Article = new HashSet<Participant_Article>();
         }
     
@@ -27,13 +27,13 @@ namespace TP03ClientDonne
         public System.DateTime DateSoumis { get; set; }
         public string URL { get; set; }
         public int Version { get; set; }
-        public int ConferenceId { get; set; }
+        public Nullable<int> ConferenceId { get; set; }
     
         public virtual Conference Conference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MembreCP_Article> MembreCP_Article { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Note> Notes { get; set; }
+        public virtual ICollection<Note> Note { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Participant_Article> Participant_Article { get; set; }
     }

@@ -17,15 +17,19 @@ namespace TP03ClientDonne
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Conference()
         {
-            this.Articles = new HashSet<Article>();
-            this.Participants = new HashSet<Participant>();
+            this.Article = new HashSet<Article>();
+            this.Participant = new HashSet<Participant>();
         }
     
         public int Id { get; set; }
+        public string Titre { get; set; }
+        public System.DateTime DateSession { get; set; }
+        public Nullable<int> PrésidentDeSessionId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Article> Articles { get; set; }
+        public virtual ICollection<Article> Article { get; set; }
+        public virtual MembreCP MembreCP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Participant> Participants { get; set; }
+        public virtual ICollection<Participant> Participant { get; set; }
     }
 }

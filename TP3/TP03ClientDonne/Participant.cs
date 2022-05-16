@@ -17,8 +17,8 @@ namespace TP03ClientDonne
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Participant()
         {
-            this.MembreCOes = new HashSet<MembreCO>();
-            this.MembreCPs = new HashSet<MembreCP>();
+            this.MembreCO = new HashSet<MembreCO>();
+            this.MembreCP = new HashSet<MembreCP>();
             this.Participant_Article = new HashSet<Participant_Article>();
         }
     
@@ -33,9 +33,9 @@ namespace TP03ClientDonne
     
         public virtual Conference Conference { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MembreCO> MembreCOes { get; set; }
+        public virtual ICollection<MembreCO> MembreCO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MembreCP> MembreCPs { get; set; }
+        public virtual ICollection<MembreCP> MembreCP { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Participant_Article> Participant_Article { get; set; }
     }

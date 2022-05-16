@@ -13,10 +13,10 @@ namespace TP03ClientDonne
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Tp03BDEntities : DbContext
+    public partial class Tp03BDEntities1 : DbContext
     {
-        public Tp03BDEntities()
-            : base("name=Tp03BDEntities")
+        public Tp03BDEntities1()
+            : base("name=Tp03BDEntities1")
         {
         }
     
@@ -25,14 +25,14 @@ namespace TP03ClientDonne
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Aptitude> Aptitudes { get; set; }
-        public virtual DbSet<Article> Articles { get; set; }
-        public virtual DbSet<Conference> Conferences { get; set; }
-        public virtual DbSet<MembreCO> MembreCOes { get; set; }
-        public virtual DbSet<MembreCP> MembreCPs { get; set; }
+        public virtual DbSet<Aptitude> Aptitude { get; set; }
+        public virtual DbSet<Article> Article { get; set; }
+        public virtual DbSet<Conference> Conference { get; set; }
+        public virtual DbSet<MembreCO> MembreCO { get; set; }
+        public virtual DbSet<MembreCP> MembreCP { get; set; }
         public virtual DbSet<MembreCP_Article> MembreCP_Article { get; set; }
-        public virtual DbSet<Note> Notes { get; set; }
-        public virtual DbSet<Participant> Participants { get; set; }
+        public virtual DbSet<Note> Note { get; set; }
+        public virtual DbSet<Participant> Participant { get; set; }
         public virtual DbSet<Participant_Article> Participant_Article { get; set; }
     }
 }
