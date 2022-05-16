@@ -62,5 +62,10 @@ namespace CodeFirstTp3
             }
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
+
+        public int InscrireArticleSoumis(string titre, DateTime dateSoumission,List<int> IDs, string url)
+        {
+            return 0;
+        }
     }
 }
