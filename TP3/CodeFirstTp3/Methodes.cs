@@ -10,6 +10,29 @@ namespace CodeFirstTp3
     {
         private static int _conferenceId;
 
+        public static int AjouterConference( DateTime dateSession, string titre)
+        {
+            using (var context = new ConferenceContext())
+            {
+                try
+                {
+                    var conference  = new Conference()
+                    {
+                        DateSession = dateSession,
+                        Titre= titre,
+                    };
+
+                    context.Conference.Add(conference);
+                    context.SaveChanges();
+                    return context.Conference.Find(conference.Id).Id;
+                }
+                catch 
+                {
+                    return -1;
+                }
+            }
+        }
+
         public static int InscrireParticipants(string prenom, string nom, string email, string affiliation, DateTime DateInscription, decimal frais)
         {
             using (var context = new ConferenceContext())
@@ -24,13 +47,13 @@ namespace CodeFirstTp3
                         Affiliation = affiliation,
                         DateInscription = DateInscription,
                         Dette = frais,
-                        Conference = context.Conference.Find(_conferenceId)
+                        ConferenceId = context.Conference.Find(1).Id
                     };
 
                     context.Add(p);
                     context.SaveChanges();
 
-                    return context.Participant.Find(p).Id;
+                    return context.Participant.Find(p.Id).Id;
                 }
                 catch { return -1; }
             }

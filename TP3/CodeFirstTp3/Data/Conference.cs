@@ -18,7 +18,7 @@ namespace CodeFirstTp3
         public DateTime DateSession { get; set; }
 
         // one-to-one
-        [Required]
+        //[Required]
         public MembreCP PrésidentDeSession { get; set; }
         // one-to-many
         public List<Article> Articles { get; set; }
