@@ -30,7 +30,7 @@ namespace CodeFirstTp3
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=CodeFirst;MultipleActiveResultSets=True");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Tp03BD;MultipleActiveResultSets=True");
         }
     }
 }
