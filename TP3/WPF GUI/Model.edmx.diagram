@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="955c9e2d2f28444b80218f0ec2fedaf1" Name="Diagram1" ZoomLevel="82">
+        <EntityTypeShape EntityType="Tp03BDModel.Aptitude" Width="1.5" PointX="4.125" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.Article" Width="1.5" PointX="10.875" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.Conference" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.MembreCO" Width="1.5" PointX="1.375" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.MembreCP" Width="1.5" PointX="4.125" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.MembreCP_Article" Width="1.5" PointX="7.5" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.Note" Width="1.5" PointX="11.125" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.Participant" Width="1.5" PointX="3.625" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Tp03BDModel.Participant_Article" Width="1.5" PointX="7.625" PointY="4.875" IsExpanded="true" />
+        <AssociationConnector Association="Tp03BDModel.FK_Aptitude_MembreCP_MembreCPId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_Article_Conference_ConferenceId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_MembreCP_Article_Article_ArticleId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_Note_Article_ArticleId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_Participant_Article_Article_ArticleId" ManuallyRouted="false" ></AssociationConnector>
+        <AssociationConnector Association="Tp03BDModel.FK_Conference_MembreCP_PrésidentDeSessionId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_Participant_Conference_ConferenceId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_MembreCO_Participant_ParticipantId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_MembreCP_Article_MembreCP_MembreCPId" ManuallyRouted="false" ></AssociationConnector>
+        <AssociationConnector Association="Tp03BDModel.FK_MembreCP_Participant_ParticipantId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_Note_MembreCP_MembreCPId" ManuallyRouted="false" />
+        <AssociationConnector Association="Tp03BDModel.FK_Participant_Article_Participant_ParticipantId" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
