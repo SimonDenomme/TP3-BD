@@ -1,27 +1,41 @@
-﻿<Window x:Class="Wpf_GUI.MainWindow"
+﻿<Window x:Class="WPF_GUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Wpf_GUI"
+        xmlns:local="clr-namespace:WPF_GUI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
     <Window.Resources>
-        <CollectionViewSource x:Key="articleViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Article}, CreateList=True}"/>
         <CollectionViewSource x:Key="participantViewSource" d:DesignSource="{d:DesignInstance {x:Type local:Participant}, CreateList=True}"/>
     </Window.Resources>
-    <Grid DataContext="{StaticResource articleViewSource}">
-        <Button x:Name="InscrireParticipants_btn" Content="InscrireParticipants" HorizontalAlignment="Left" Height="30" Margin="62,374,0,0" VerticalAlignment="Top" Width="119" Click="InscrireParticipants_btn_Click"/>
-        <Label x:Name="Nom_lbl" Content="Nom" HorizontalAlignment="Left" Margin="46,12,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Nom_txt" HorizontalAlignment="Left" Height="22" Margin="26,43,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="Prenom_lbl" Content="Prenom" HorizontalAlignment="Left" Margin="40,72,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Prenom_txt" HorizontalAlignment="Left" Height="22" Margin="26,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="Email_lbl" Content="Email" HorizontalAlignment="Left" Margin="152,14,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Email_txt" HorizontalAlignment="Left" Height="22" Margin="132,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
-        <Label x:Name="Affiliation_lbl" Content="Affiliation" HorizontalAlignment="Left" Margin="142,74,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Affiliation_txt" HorizontalAlignment="Left" Height="22" Margin="132,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
-        <Calendar HorizontalAlignment="Left" Margin="-37,198,0,0" VerticalAlignment="Top" Height="173" Width="319"/>
-        <Label x:Name="Dette_lbl" Content="Dette" HorizontalAlignment="Left" Margin="101,140,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Affiliation_txt_Copy" HorizontalAlignment="Left" Height="22" Margin="81,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
+    <Window.DataContext>
+        <CollectionViewSource/>
+    </Window.DataContext>
+    <Grid>
+        <Label x:Name="lblPrenom" Content="Prénom: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtPrenom" HorizontalAlignment="Left" Margin="82,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblNom" Content="Nom: " HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtNom" HorizontalAlignment="Left" Margin="82,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblEmail" Content="Email: " HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Margin="82,72,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblAffiliation" Content="Affiliation: " HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtAffiliation" HorizontalAlignment="Left" Margin="82,103,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label x:Name="lblDate" Content="Date: " HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top"/>
+        <DatePicker x:Name="dtpDate" HorizontalAlignment="Left" Margin="82,136,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDette" Content="Frais: " HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtDette" HorizontalAlignment="Left" Margin="82,173,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Button x:Name="btnParticipant" Content="InscrireParticipant" HorizontalAlignment="Left" Margin="44,0,0,0" VerticalAlignment="Center" Click="btnParticipant_Click"/>
+        <DataGrid x:Name="participantDataGrid" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding Source={StaticResource participantViewSource}}" Margin="236,9,146,211" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="IdColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="NomColumn" Binding="{Binding Nom}" Header="Nom" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="PrenomColumn" Binding="{Binding Prenom}" Header="Prenom" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="EmailColumn" Binding="{Binding Email}" Header="Email" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="AffiliationColumn" Binding="{Binding Affiliation}" Header="Affiliation" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="DateInscriptionColumn" Binding="{Binding DateInscription}" Header="DateInscription" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="DetteColumn" Binding="{Binding Dette}" Header="Frais" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

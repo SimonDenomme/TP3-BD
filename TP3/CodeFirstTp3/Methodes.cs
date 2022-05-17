@@ -122,7 +122,7 @@ namespace CodeFirstTp3
 
                 {
                     var p = context.Participant.Find(participantId);
-                    if(context.MembreCP.Where(m=>m.ParticipantId== participantId) != null)
+                    if (context.MembreCP.Where(m => m.ParticipantId == participantId).Count() >= 1)
                     { throw new Exception("Ne peut pas rajouter deux fois le même membre"); }
                     if (p == null) { throw new Exception("L'Id du participant n'existe pas."); }
 
@@ -137,7 +137,7 @@ namespace CodeFirstTp3
 
                     try
                     {
-                       
+
 
                         context.MembreCP.Add(m);
                         context.SaveChanges();
@@ -157,12 +157,12 @@ namespace CodeFirstTp3
                         context.MembreCP.Update(m);
                         context.SaveChanges();
 
-                        return context.MembreCP.Find(m).Id;
+                        return context.MembreCP.Find((int)m.Id).Id;
                     }
                     catch (DbUpdateException e)
                     {
 
-                        if(context.MembreCP.Find(m.Id)!= null)
+                        if (context.MembreCP.Find(m) != null)
                             context.MembreCP.Remove(m);
                         Console.WriteLine(e.Message);
                         return -1;
@@ -176,7 +176,10 @@ namespace CodeFirstTp3
                 return -1;
             }
         }
-
+        public static int AjouterParticipantArticle()
+        {
+            return 0;
+        }
         public static int InscrireArticleSoumis(string Titre, DateTime DateSoumission, string URL, params int[] auteurs)
         {
             try
@@ -198,7 +201,8 @@ namespace CodeFirstTp3
                     {
                         var p = context.Participant.Find(i);
                         if (p == null) { throw new Exception("L'auteur" + i + " n'existe pas."); }
-
+                        if (a.Auteurs == null)
+                            a.Auteurs = new List<Participant_Article>();
                         a.Auteurs.Add(new Participant_Article
                         {
                             Article = a,
@@ -209,19 +213,19 @@ namespace CodeFirstTp3
                     context.Article.Add(a);
                     context.SaveChanges();
 
-                    return context.Article.Find(a).Id;
+                    return context.Article.Find(a.Id).Id;
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
         }
 
-        public static bool AssignerArticles(int id, params int[] voteurs)
+        public static bool AssignerArticles(int ArticleID, params int[] voteurs)
         {
             try
             {
                 using (var context = new ConferenceContext())
                 {
-                    var a = context.Article.Find(id);
+                    var a = context.Article.Find(ArticleID);
                     if (a == null) { throw new Exception("Cet ouvrage n'existe pas."); }
 
                     if (voteurs == null) { throw new Exception("Il faut au moins un membre votant l'ouvrage."); }
@@ -231,7 +235,8 @@ namespace CodeFirstTp3
                     {
                         var m = context.MembreCP.Find(i);
                         if (m == null) { throw new Exception("Le membre du comité programme #" + i + " n'existe pas."); }
-
+                        if (a.MembreCPs == null)
+                            a.MembreCPs = new List<MembreCP_Article>();
                         a.MembreCPs.Add(new MembreCP_Article
                         {
                             Article = a,
@@ -248,20 +253,21 @@ namespace CodeFirstTp3
             catch (Exception e) { Console.WriteLine(e.Message); return false; }
         }
 
-        public static double EnregistrerNotesEvaluation(int id, int MembreCPId, byte note)
+        public static double EnregistrerNotesEvaluation(int ArticleId, int MembreCPId, byte note)
         {
             try
             {
                 using (var context = new ConferenceContext())
                 {
-                    var a = context.Article.Find(id);
+                    var a = context.Article.Find(ArticleId);
                     if (a == null) { throw new Exception("Cet ouvrage n'existe pas."); }
 
                     var m = context.MembreCP.Find(MembreCPId);
                     if (m == null) { throw new Exception("Ce membre du comité programme n'existe pas."); }
 
                     if (context.MembreCP_Article.Where(x => x.MembreCP == m && x.Article == a) == null) { throw new Exception("Ce membre du comité programme n'est pas invité au vote."); }
-
+                    if (a.Notes == null)
+                        a.Notes = new List<Note>();
                     a.Notes.Add(new Note
                     {
                         Valeur = note,
@@ -289,7 +295,11 @@ namespace CodeFirstTp3
                     var articles = context.Article.ToList();
 
                     foreach (Article a in articles)
-                        ar.Add(new Tuple<int, double>(a.Id, context.Note.Where(x => x.Article == a).Average(x => x.Valeur)));
+                    {
+                        var test = context.Note.Where(x => x.Article == a);
+                        if (test.Count() == 1)
+                            ar.Add(new Tuple<int, double>(a.Id, context.Note.Where(x => x.Article == a).Average(x => x.Valeur)));
+                    }
 
                     // TODO: sort by note
 
@@ -313,7 +323,7 @@ namespace CodeFirstTp3
                 {
                     if (context.Conference.Where(x => x.Titre == Titre).SingleOrDefault() != null) { throw new Exception("Ce titre de session est utilisé par une autre conférence."); }
 
-                    var p = context.MembreCP.Where(x => x.ParticipantId == MembreCPId).SingleOrDefault();
+                    var p = context.MembreCP.Where(x => x.Id == MembreCPId).SingleOrDefault();
                     if (p == null) { throw new Exception("Ce participant n'est pas un membre du comité programme."); }
                     if (context.Conference.Where(x => x.PrésidentDeSession == p).SingleOrDefault() != null) { throw new Exception("Ce membre du comité programme préside une autre conférence."); }
 
@@ -329,14 +339,15 @@ namespace CodeFirstTp3
                         var a = context.Article.Find(i);
                         if (a == null) { throw new Exception("L'article #" + i + " n'existe pas."); }
                         if (context.Conference.Where(x => x.Articles.Contains(a)).SingleOrDefault() != null) { throw new Exception("Cet article a été présenté à une autre conférence."); }
-
+                        if (c.Articles == null)
+                            c.Articles = new List<Article>();
                         c.Articles.Add(a);
                     }
 
                     context.Conference.Add(c);
                     context.SaveChanges();
 
-                    _conferenceId = context.Conference.Find(c).Id;
+                    _conferenceId = context.Conference.Find(c.Id).Id;
                     return _conferenceId;
                 }
             }
@@ -350,23 +361,20 @@ namespace CodeFirstTp3
                 using (var context = new ConferenceContext())
                 {
                     var a = context.Article.Find(id);
-                    if (context.Article.Find(id) != null) { throw new Exception("Ce titre de session est utilisé par une autre conférence."); }
+                    if (context.Article.Find(id) == null) { throw new Exception("Ce titre de session est utilisé par une autre conférence."); }
 
-                    var a2 = new Article()
-                    {
-                        Titre = a.Titre,
-                        Conference = context.Conference.Find(_conferenceId),
-                        DateSoumis = DateSoumission,
-                        URL = URL,
-                        Version = a.Version + 1,
-                        Auteurs = a.Auteurs,
-                        MembreCPs = a.MembreCPs
-                    };
 
-                    context.Article.Add(a2);
+
+                    a.Conference = context.Conference.Find(1);
+                    a.DateSoumis = DateSoumission;
+                    a.URL = URL;
+
+
+
+                    context.Article.Update(a);
                     context.SaveChanges();
 
-                    return context.Article.Find(a2).Id;
+                    return context.Article.Find(a.Id).Id;
                 }
             }
             catch (Exception e) { Console.WriteLine(e.Message); return -1; }
